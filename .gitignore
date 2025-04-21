@@ -1,0 +1,30 @@
+# 환경 변수 파일
+.env
+
+# Python 캐시 파일
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 분포 / 패키징
+dist/
+build/
+*.egg-info/
+
+# 가상 환경
+venv/
+env/
+ENV/
+
+# IDE 설정
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 로그 파일
+*.log
+
+# 로컬 데이터
+temp_*/
+*.csv
