@@ -42,7 +42,7 @@ if not API_KEY:
 try:
     set_matplotlib_korean_font()
 except Exception as e:
-    st.warning(f"한글 폰트 설정 중 오류가 발생했습니다: {e}. 한글이 깨져 보일 수 있습니다.")
+    st.warning(f"한글 폰트 설정 중 오류가 발생했습니다. 차트의 한글이 정상적으로 표시되지 않을 수 있습니다.")
 
 # GPT API 호출 함수
 def generate_data_story(prompt, model="gpt-3.5-turbo"):
@@ -327,13 +327,19 @@ def main():
                             try:
                                 if all(k in chart_info for k in ["type", "x_column", "y_column"]):
                                     if chart_info["x_column"] in df.columns and chart_info["y_column"] in df.columns:
+                                        # 한글 폰트 재확인
+                                        try:
+                                            set_matplotlib_korean_font()
+                                        except:
+                                            pass
+
                                         fig = create_chart(df, chart_info)
                                         if fig:
                                             st.pyplot(fig)
                                         else:
                                             st.warning("차트를 생성할 수 없습니다.")
                                     else:
-                                        st.warning(f"차트 생성에 필요한 열({chart_info['x_column']} 또는 {chart_info['y_column']})이 데이터에 없습니다.")
+                                        st.warning(f"차트 생성에 필요한 열이 데이터에 없습니다.")
                             except Exception as e:
                                 st.error(f"차트 생성 중 오류 발생: {e}")
             else:

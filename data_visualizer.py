@@ -20,59 +20,62 @@ def set_matplotlib_korean_font():
     """
     system_name = platform.system()
     
-    # 기본 폰트 설정
-    default_font = 'NanumGothic'
-    
     try:
-        if system_name == 'Windows':
+        # Streamlit Cloud (Linux)를 위한 설정
+        if system_name == 'Linux':
+            # Nanum 폰트를 먼저 시도 (packages.txt에 fonts-nanum 추가 필요)
+            for font_name in ['NanumGothic', 'NanumGothicCoding', 'NanumBarunGothic']:
+                for font in fm.fontManager.ttflist:
+                    if font_name.lower() in font.name.lower():
+                        plt.rcParams['font.family'] = font.name
+                        plt.rcParams['axes.unicode_minus'] = False
+                        print(f"Found Korean font: {font.name}")
+                        return
+
+            # 직접 폰트 경로 지정 시도
+            font_dirs = ['/usr/share/fonts/truetype/nanum']
+            for font_dir in font_dirs:
+                if os.path.exists(font_dir):
+                    font_files = fm.findSystemFonts(fontpaths=[font_dir])
+                    for font_file in font_files:
+                        fm.fontManager.addfont(font_file)
+                    
+                    # 다시 폰트 찾기 시도
+                    for font in fm.fontManager.ttflist:
+                        if 'nanum' in font.name.lower():
+                            plt.rcParams['font.family'] = font.name
+                            plt.rcParams['axes.unicode_minus'] = False
+                            print(f"Added Korean font: {font.name}")
+                            return
+            
+            # 마지막 수단으로 기본 폰트 지정
+            plt.rcParams['font.family'] = 'sans-serif'
+            print("No Korean font found on Linux, using default sans-serif font")
+            
+        elif system_name == 'Windows':
             # Windows 시스템 폰트 목록
             font_list = ['Malgun Gothic', 'NanumGothic', 'NanumBarunGothic', 'Gulim']
             for font in font_list:
-                if any([font in f.name for f in fm.fontManager.ttflist]):
+                if any([font.lower() in f.name.lower() for f in fm.fontManager.ttflist]):
                     plt.rcParams['font.family'] = font
-                    plt.rcParams['axes.unicode_minus'] = False  # 마이너스 기호 표시 설정
+                    plt.rcParams['axes.unicode_minus'] = False
                     return
                     
         elif system_name == 'Darwin':  # macOS
             # macOS 시스템 폰트 목록
             font_list = ['AppleGothic', 'NanumGothic', 'NanumBarunGothic']
             for font in font_list:
-                if any([font in f.name for f in fm.fontManager.ttflist]):
+                if any([font.lower() in f.name.lower() for f in fm.fontManager.ttflist]):
                     plt.rcParams['font.family'] = font
                     plt.rcParams['axes.unicode_minus'] = False
                     return
-                    
-        elif system_name == 'Linux':
-            # Linux 시스템 폰트 목록
-            font_list = ['NanumGothic', 'NanumBarunGothic', 'UnDotum']
-            for font in font_list:
-                if any([font in f.name for f in fm.fontManager.ttflist]):
-                    plt.rcParams['font.family'] = font
-                    plt.rcParams['axes.unicode_minus'] = False
-                    return
-                    
-        # 폰트를 찾지 못한 경우, 자주 사용되는 폰트 파일 경로 확인
-        font_paths = []
         
-        if system_name == 'Windows':
-            font_paths.append('C:/Windows/Fonts/malgun.ttf')  # 맑은 고딕
-        elif system_name == 'Darwin':
-            font_paths.append('/Library/Fonts/AppleGothic.ttf')  # 애플고딕
-        
-        for font_path in font_paths:
-            if os.path.exists(font_path):
-                fm.fontManager.addfont(font_path)
-                plt.rcParams['font.family'] = fm.FontProperties(fname=font_path).get_name()
-                plt.rcParams['axes.unicode_minus'] = False
-                return
-        
-        # 모든 시도 실패시 기본값 사용
+        # 기본 설정
         plt.rcParams['font.family'] = 'sans-serif'  
         plt.rcParams['axes.unicode_minus'] = False
-        st.warning("한글 폰트를 찾을 수 없습니다. 한글이 깨져 보일 수 있습니다.")
         
     except Exception as e:
-        st.warning(f"폰트 설정 중 오류 발생: {e}")
+        print(f"Font setting error: {e}")
         plt.rcParams['font.family'] = 'sans-serif'
         plt.rcParams['axes.unicode_minus'] = False
 
