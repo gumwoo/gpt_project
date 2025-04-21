@@ -28,3 +28,4 @@ ENV/
 # 로컬 데이터
 temp_*/
 *.csv
+!sample_data/*.csv

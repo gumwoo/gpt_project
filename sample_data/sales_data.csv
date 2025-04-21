@@ -1,0 +1,90 @@
+date,region,product_category,sales_amount,units_sold,customer_type,promotion_active
+2023-01-01,North,Electronics,10250.75,41,New,False
+2023-01-02,South,Clothing,8750.25,95,Returning,True
+2023-01-03,East,Home Goods,5500.00,33,Returning,False
+2023-01-04,West,Electronics,12500.50,48,New,True
+2023-01-05,North,Food & Beverage,2750.75,110,Returning,False
+2023-01-06,South,Electronics,9800.00,35,New,False
+2023-01-07,East,Clothing,7250.25,80,Returning,True
+2023-01-08,West,Home Goods,4800.00,28,New,False
+2023-01-09,North,Electronics,11500.50,45,Returning,True
+2023-01-10,South,Food & Beverage,3050.75,122,New,False
+2023-01-11,East,Electronics,9500.00,38,Returning,False
+2023-01-12,West,Clothing,6800.25,75,New,True
+2023-01-13,North,Home Goods,5100.00,30,Returning,False
+2023-01-14,South,Electronics,13250.50,52,New,True
+2023-01-15,East,Food & Beverage,2850.75,114,Returning,False
+2023-01-16,West,Electronics,10000.00,40,New,False
+2023-01-17,North,Clothing,8000.25,88,Returning,True
+2023-01-18,South,Home Goods,4900.00,29,New,False
+2023-01-19,East,Electronics,12000.50,47,Returning,True
+2023-01-20,West,Food & Beverage,3200.75,128,New,False
+2023-01-21,North,Electronics,9700.00,39,Returning,False
+2023-01-22,South,Clothing,7500.25,83,New,True
+2023-01-23,East,Home Goods,5300.00,31,Returning,False
+2023-01-24,West,Electronics,12750.50,50,New,True
+2023-01-25,North,Food & Beverage,2950.75,118,Returning,False
+2023-01-26,South,Electronics,10500.00,42,New,False
+2023-01-27,East,Clothing,8250.25,91,Returning,True
+2023-01-28,West,Home Goods,5000.00,30,New,False
+2023-01-29,North,Electronics,11750.50,46,Returning,True
+2023-01-30,South,Food & Beverage,3100.75,124,New,False
+2023-02-01,East,Electronics,10350.75,42,New,False
+2023-02-02,West,Clothing,8950.25,98,Returning,True
+2023-02-03,North,Home Goods,5700.00,34,Returning,False
+2023-02-04,South,Electronics,13000.50,51,New,True
+2023-02-05,East,Food & Beverage,2850.75,114,Returning,False
+2023-02-06,West,Electronics,10200.00,41,New,False
+2023-02-07,North,Clothing,7450.25,82,Returning,True
+2023-02-08,South,Home Goods,5100.00,30,New,False
+2023-02-09,East,Electronics,12100.50,48,Returning,True
+2023-02-10,West,Food & Beverage,3150.75,126,New,False
+2023-02-11,North,Electronics,9800.00,39,Returning,False
+2023-02-12,South,Clothing,7100.25,78,New,True
+2023-02-13,East,Home Goods,5300.00,32,Returning,False
+2023-02-14,West,Electronics,13750.50,54,New,True
+2023-02-15,North,Food & Beverage,2950.75,118,Returning,False
+2023-02-16,South,Electronics,10400.00,42,New,False
+2023-02-17,East,Clothing,8500.25,94,Returning,True
+2023-02-18,West,Home Goods,5200.00,31,New,False
+2023-02-19,North,Electronics,12400.50,49,Returning,True
+2023-02-20,South,Food & Beverage,3300.75,132,New,False
+2023-02-21,East,Electronics,10100.00,41,Returning,False
+2023-02-22,West,Clothing,7800.25,86,New,True
+2023-02-23,North,Home Goods,5500.00,33,Returning,False
+2023-02-24,South,Electronics,13250.50,52,New,True
+2023-02-25,East,Food & Beverage,3050.75,122,Returning,False
+2023-02-26,West,Electronics,10800.00,43,New,False
+2023-02-27,North,Clothing,8650.25,95,Returning,True
+2023-02-28,South,Home Goods,5200.00,31,New,False
+2023-03-01,East,Electronics,11250.75,45,New,False
+2023-03-02,West,Clothing,9150.25,101,Returning,True
+2023-03-03,North,Home Goods,5900.00,35,Returning,False
+2023-03-04,South,Electronics,13500.50,53,New,True
+2023-03-05,East,Food & Beverage,2950.75,118,Returning,False
+2023-03-06,West,Electronics,10600.00,43,New,False
+2023-03-07,North,Clothing,7650.25,84,Returning,True
+2023-03-08,South,Home Goods,5300.00,32,New,False
+2023-03-09,East,Electronics,12400.50,49,Returning,True
+2023-03-10,West,Food & Beverage,3250.75,130,New,False
+2023-03-11,North,Electronics,10000.00,40,Returning,False
+2023-03-12,South,Clothing,7300.25,80,New,True
+2023-03-13,East,Home Goods,5500.00,33,Returning,False
+2023-03-14,West,Electronics,14000.50,55,New,True
+2023-03-15,North,Food & Beverage,3050.75,122,Returning,False
+2023-03-16,South,Electronics,10700.00,43,New,False
+2023-03-17,East,Clothing,8700.25,96,Returning,True
+2023-03-18,West,Home Goods,5400.00,32,New,False
+2023-03-19,North,Electronics,12700.50,50,Returning,True
+2023-03-20,South,Food & Beverage,3400.75,136,New,False
+2023-03-21,East,Electronics,10300.00,41,Returning,False
+2023-03-22,West,Clothing,8000.25,88,New,True
+2023-03-23,North,Home Goods,5700.00,34,Returning,False
+2023-03-24,South,Electronics,13500.50,53,New,True
+2023-03-25,East,Food & Beverage,3150.75,126,Returning,False
+2023-03-26,West,Electronics,11000.00,44,New,False
+2023-03-27,North,Clothing,8850.25,97,Returning,True
+2023-03-28,South,Home Goods,5400.00,32,New,False
+2023-03-29,East,Electronics,13000.50,51,Returning,True
+2023-03-30,West,Food & Beverage,3500.75,140,New,False
+2023-03-31,North,Electronics,10500.00,42,Returning,False
