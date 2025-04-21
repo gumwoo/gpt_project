@@ -7,13 +7,16 @@ import os
 from io import StringIO
 import matplotlib.pyplot as plt
 import seaborn as sns
-import dotenv
 from prompts import generate_data_story_prompt
 from data_loader import load_sample_data, get_sample_data_info, load_uploaded_file
 from data_visualizer import create_chart, auto_generate_charts, set_matplotlib_korean_font
 
-# .env 파일 로드
-dotenv.load_dotenv()
+# 환경 변수 로드 시도 (로컬 개발 환경용)
+try:
+    import dotenv
+    dotenv.load_dotenv()
+except ImportError:
+    pass
 
 # 페이지 설정
 st.set_page_config(
@@ -23,16 +26,23 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# API 키 설정 - 환경 변수에서 로드
-API_KEY = os.getenv("OPENAI_API_KEY")
+# API 키 설정 - Streamlit Cloud의 secrets 또는 환경 변수에서 로드
+if 'OPENAI_API_KEY' in st.secrets:
+    API_KEY = st.secrets['OPENAI_API_KEY']
+else:
+    API_KEY = os.getenv("OPENAI_API_KEY")
+
 OPENAI_API_URL = "https://api.openai.com/v1/chat/completions"
 
 # API 키가 없는 경우 경고
 if not API_KEY:
-    st.warning("OpenAI API 키가 설정되지 않았습니다. .env 파일을 확인하세요.")
+    st.warning("OpenAI API 키가 설정되지 않았습니다. Streamlit Cloud의 secrets 또는 .env 파일을 확인하세요.")
 
-# 한글 폰트 설정
-set_matplotlib_korean_font()
+# 한글 폰트 설정 시도 (오류가 발생해도 앱은 계속 작동)
+try:
+    set_matplotlib_korean_font()
+except Exception as e:
+    st.warning(f"한글 폰트 설정 중 오류가 발생했습니다: {e}. 한글이 깨져 보일 수 있습니다.")
 
 # GPT API 호출 함수
 def generate_data_story(prompt, model="gpt-3.5-turbo"):
@@ -48,9 +58,17 @@ def generate_data_story(prompt, model="gpt-3.5-turbo"):
     payload = {
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.7,
-        "response_format": {"type": "json_object"}
+        "temperature": 0.7
     }
+    
+    # response_format 추가 (일부 모델만 지원)
+    try:
+        # 최신 모델에만 적용
+        if "gpt-4" in model or "-turbo" in model:
+            payload["response_format"] = {"type": "json_object"}
+    except:
+        # 오류 발생시 무시
+        pass
     
     try:
         response = requests.post(OPENAI_API_URL, headers=headers, json=payload)
@@ -63,7 +81,12 @@ def generate_data_story(prompt, model="gpt-3.5-turbo"):
         response_json = response.json()
         if "choices" in response_json and len(response_json["choices"]) > 0:
             content = response_json["choices"][0]["message"]["content"]
-            return json.loads(content)
+            try:
+                return json.loads(content)
+            except json.JSONDecodeError:
+                st.error("API 응답이 유효한 JSON 형식이 아닙니다.")
+                st.write("원본 응답:", content)
+                return None
         else:
             st.error(f"API 응답 형식 오류: {response_json}")
             return None
@@ -143,7 +166,7 @@ def main():
         )
         
         # matplotlib 스타일 목록 수정 - 최신 버전 호환성을 위해
-        available_styles = ['default', 'classic', 'ggplot', 'bmh', 'dark_background', 'seaborn-v0_8']
+        available_styles = ['default', 'classic', 'ggplot', 'bmh', 'dark_background']
         
         chart_style = st.selectbox(
             "차트 스타일",
@@ -342,19 +365,13 @@ def main():
         - seaborn
         - requests
         - chardet (한글 인코딩 감지용)
+        
+        로컬 개발 환경에서 실행할 경우:
         - python-dotenv (환경 변수 로드용)
         
-        설치 방법:
-        ```
-        pip install -r requirements.txt
-        ```
-        
         API 키 설정 방법:
-        1. 프로젝트 루트에 `.env` 파일 생성
-        2. 파일에 다음 내용 추가:
-           ```
-           OPENAI_API_KEY=your_api_key_here
-           ```
+        - Streamlit Cloud에서는 앱 설정의 Secrets 메뉴에서 OPENAI_API_KEY 설정
+        - 로컬 개발 환경에서는 .env 파일에 OPENAI_API_KEY=your_api_key_here 추가
         """)
     
     # 푸터
